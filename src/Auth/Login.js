@@ -5,14 +5,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const initialState = {
-  fullName: "",
   email: "",
   password: "",
-  phone: "",
-  address: "",
 };
 
-const Register = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState(initialState);
 
@@ -27,10 +24,13 @@ const Register = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/register", form);
-      if (res.data.success) {
-        toast.success(res.data.message);
-        navigate("/login");
+      const res = await axios.post("/api/v1/auth/login", {
+        email: form.email,
+        password: form.password,
+      });
+      if (res && res.data.success) {
+        navigate("/");
+        toast.success(res.data && res.data.message);
       } else {
         toast.error(res.data.message);
       }
@@ -43,20 +43,8 @@ const Register = () => {
   return (
     <Layout>
       <div className="register">
-        <h1>Register page</h1>
+        <h1>Login page</h1>
         <form onSubmit={handleOnSubmit}>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Full Name"
-              name="fullName"
-              value={form.fullName}
-              onChange={handleOnChange}
-            />
-          </div>
           <div className="mb-3">
             <input
               type="email"
@@ -79,31 +67,9 @@ const Register = () => {
               onChange={handleOnChange}
             />
           </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Phone"
-              name="phone"
-              value={form.phone}
-              onChange={handleOnChange}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Address"
-              name="address"
-              value={form.address}
-              onChange={handleOnChange}
-            />
-          </div>
 
           <button type="submit" className="btn btn-primary">
-            Submit
+            LOGIN
           </button>
         </form>
       </div>
@@ -111,4 +77,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

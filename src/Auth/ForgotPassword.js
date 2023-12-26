@@ -5,15 +5,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const initialState = {
-  fullName: "",
   email: "",
-  password: "",
-  phone: "",
-  address: "",
+  newPassword: "",
   answer: "",
 };
 
-const Register = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState(initialState);
 
@@ -28,12 +25,16 @@ const Register = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/register", form);
-      if (res.data.success) {
+      const res = await axios.post("/api/v1/auth/forgot-password", {
+        email: form.email,
+        newPassword: form.newPassword,
+        answer: form.answer,
+      });
+      if (res.data && res.data.success) {
         toast.success(res.data.message);
         navigate("/login");
       } else {
-        toast.error(res.data.message);
+        toast.error(res.data && res.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -44,20 +45,8 @@ const Register = () => {
   return (
     <Layout>
       <div className="register">
-        <h1>Register page</h1>
+        <h1>Password Reset page</h1>
         <form onSubmit={handleOnSubmit}>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Full Name"
-              name="fullName"
-              value={form.fullName}
-              onChange={handleOnChange}
-            />
-          </div>
           <div className="mb-3">
             <input
               type="email"
@@ -71,51 +60,29 @@ const Register = () => {
           </div>
           <div className="mb-3">
             <input
+              type="text"
+              className="form-control"
+              id="exampleInputPassword1"
+              placeholder="Your favourite Sport?"
+              name="answer"
+              value={form.answer}
+              onChange={handleOnChange}
+            />
+          </div>
+          <div className="mb-3">
+            <input
               type="password"
               className="form-control"
               id="exampleInputPassword1"
-              placeholder="Password"
-              name="password"
-              value={form.password}
-              onChange={handleOnChange}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Phone"
-              name="phone"
-              value={form.phone}
-              onChange={handleOnChange}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Address"
-              name="address"
-              value={form.address}
-              onChange={handleOnChange}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              value={form.answer}
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Your favorite sports?"
-              name="answer"
+              placeholder="New Password"
+              name="newPassword"
+              value={form.newPassword}
               onChange={handleOnChange}
             />
           </div>
 
           <button type="submit" className="btn btn-primary">
-            Submit
+            Reset
           </button>
         </form>
       </div>
@@ -123,4 +90,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ForgotPassword;

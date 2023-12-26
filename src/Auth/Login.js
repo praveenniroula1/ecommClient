@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Layout from "../Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../Context/Auth";
 
 const initialState = {
   email: "",
@@ -10,7 +11,9 @@ const initialState = {
 };
 
 const Login = () => {
+  const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [form, setForm] = useState(initialState);
 
   const handleOnChange = (e) => {
@@ -29,8 +32,14 @@ const Login = () => {
         password: form.password,
       });
       if (res && res.data.success) {
-        navigate("/");
+        navigate(location.state || "/");
         toast.success(res.data && res.data.message);
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
       } else {
         toast.error(res.data.message);
       }

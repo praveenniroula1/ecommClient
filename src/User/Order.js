@@ -1,10 +1,8 @@
 import React from "react";
 import Layout from "../Layout/Layout";
-import { useAuth } from "../Context/Auth";
 import UserMenu from "../Layout/UserMenu";
 
-const Dashboard = () => {
-  const [auth, setAuth] = useAuth();
+const Order = () => {
   return (
     <Layout>
       <div className="container-fluid p-3 m-3">
@@ -13,11 +11,7 @@ const Dashboard = () => {
             <UserMenu />
           </div>
           <div className="col-md-9">
-            <div className="card w-75 p-3">
-              <h3>{auth?.user?.fullName}</h3>
-              <h3>{auth?.user?.email}</h3>
-              <h3>{auth?.user?.address}</h3>
-            </div>
+            <h1>All orders</h1>
           </div>
         </div>
       </div>
@@ -25,4 +19,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Order;

@@ -1,28 +1,29 @@
 import React from "react";
 import Layout from "../Layout/Layout";
+import Adminmenu from "../Layout/Adminmenu";
 import { useAuth } from "../Context/Auth";
-import UserMenu from "../Layout/UserMenu";
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const [auth, setAuth] = useAuth();
   return (
     <Layout>
-      <div className="container-fluid p-3 m-3">
+      <div className="container-fluid m-3 p-3">
         <div className="row">
           <div className="col-md-3">
-            <UserMenu />
+            <Adminmenu />
           </div>
           <div className="col-md-9">
+            {" "}
             <div className="card w-75 p-3">
-              <h3>{auth?.user?.fullName}</h3>
-              <h3>{auth?.user?.email}</h3>
-              <h3>{auth?.user?.address}</h3>
+              <h1>Admin Name: {auth?.user?.fullName}</h1>
+              <h1>Admin Email: {auth?.user?.email}</h1>
+              <h1>Admin Phone: {auth?.user?.phone}</h1>
             </div>
           </div>
         </div>
-      </div>
+      </div>{" "}
     </Layout>
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

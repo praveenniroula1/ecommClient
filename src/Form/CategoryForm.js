@@ -3,7 +3,7 @@ import React from "react";
 const CategoryForm = ({ handleOnSubmit, value, setValue }) => {
   return (
     <>
-      <form>
+      <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <input
             type="text"

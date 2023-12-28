@@ -9,13 +9,15 @@ import Login from "./Auth/Login";
 import Dashboard from "./User/Dashboard";
 import { PrivateRoutes } from "./Routes/PrivateRoutes";
 import ForgotPassword from "./Auth/ForgotPassword";
-import { Adminroute } from "./Routes/Adminroute";
 import AdminDashboard from "./Admin/AdminDashboard";
 import CreateCategory from "./Admin/CreateCategory";
 import Users from "./Admin/Users";
 import CreateProduct from "./Admin/CreateProduct";
 import Order from "./User/Order";
 import Profile from "./User/Profile";
+import Adminroute from "./Routes/Adminroute";
+import Products from "./Admin/Products";
+import UpdateProduct from "./Admin/UpdateProduct";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/create-category" element={<CreateCategory />} />
           <Route path="admin/create-product" element={<CreateProduct />} />
+          <Route path="admin/product/:slug" element={<UpdateProduct />} />
+          <Route path="admin/products" element={<Products />} />
           <Route path="admin/users" element={<Users />} />
         </Route>
 

@@ -1,18 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
-import { useAuth } from "../Context/Auth";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Checkbox } from "antd";
 
 const Homepage = () => {
-  const [auth, setAuth] = useAuth();
-  const [products, setProducts] = useAuth([]);
-  const [categories, setCategories] = useAuth([]);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [checked, setChecked] = useState([]);
 
   const getAllcategory = async () => {
     const { data } = await axios.get("/api/v1/category/get-category");
-    if (data.success) {
+    if (data?.success) {
       setCategories(data?.category);
     }
     try {
@@ -33,6 +32,16 @@ const Homepage = () => {
       console.log(error);
     }
   };
+
+  const handleFilter = (value, id) => {
+    let all = [...checked];
+    if (value) {
+      all.push(id);
+    } else {
+      all = all.filter((c) => c !== id);
+    }
+    setChecked(all);
+  };
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -42,17 +51,21 @@ const Homepage = () => {
       <div className="row">
         <div className="col-md-3">
           <h4 className="text-center">FIlter by Category</h4>
-          {categories?.map((c) => (
-            <Checkbox key={c._id} onChange={(e) => console.log(e)}>
-              {c.name}
-            </Checkbox>
-          ))}
+          <div className="d-flex flex-column">
+            {categories?.map((c) => (
+              <Checkbox
+                key={c._id}
+                onChange={(e) => handleFilter(e.target.checked, c._id)}
+              >
+                {c.name}
+              </Checkbox>
+            ))}
+          </div>
         </div>
         <div className="col-md-9">
-          {" "}
+          {JSON.stringify(checked, null, 4)}
           <h4 className="text-center">All products</h4>
           <div className="d-flex flex-wrap">
-            {" "}
             {products?.map((p) => {
               return (
                 <Link

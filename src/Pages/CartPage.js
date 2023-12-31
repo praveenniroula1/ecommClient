@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import { useCart } from "../Context/Cart";
 import { useAuth } from "../Context/Auth";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import DropIn from "braintree-web-drop-in-react";
+import toast from "react-hot-toast";
 
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   //total price
   const totalPrice = () => {
@@ -33,6 +39,37 @@ const CartPage = () => {
       localStorage.setItem("cart", JSON.stringify(myCart));
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getToken = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/product/braintree/token");
+      setClientToken(data?.clientToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, [auth?.token]);
+
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post("/api/v1/product/braintree/payment", {
+        nonce,
+        cart,
+      });
+      setLoading(false);
+      localStorage.removeItem("cart");
+      setCart([]);
+      navigate("/dashboard/user/order");
+      toast.success("Payment successful");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
   };
   return (
@@ -85,6 +122,68 @@ const CartPage = () => {
             <h4>Total | Checkout | Payment </h4>
             <hr />
             <h4>Total: {totalPrice()}</h4>
+            {auth?.user?.address ? (
+              <>
+                <div className="mb-3">
+                  <h4> Current Address</h4>
+                  <h5>{auth?.user?.address}</h5>
+                  <button
+                    onClick={() => {
+                      navigate("/dashboard/user/profile");
+                    }}
+                    className="btn btn-outline-warning"
+                  >
+                    Update address
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="mb-3">
+                {auth?.token ? (
+                  <button
+                    className="btn btn-outline-warning"
+                    onClick={() => navigate("/dashboard/user/profile")}
+                  >
+                    Update Adress
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-outline-warning"
+                    onClick={() =>
+                      navigate("/login", {
+                        state: "/cart",
+                      })
+                    }
+                  >
+                    Login to Checkout
+                  </button>
+                )}
+              </div>
+            )}
+            <div className="mt-2">
+              {!clientToken || !cart?.length ? (
+                " "
+              ) : (
+                <>
+                  <DropIn
+                    options={{
+                      authorization: clientToken,
+                      paypal: {
+                        flow: "vault",
+                      },
+                    }}
+                    onInstance={(instance) => setInstance(instance)}
+                  />
+                  <button
+                    className="btn btn-primary"
+                    onClick={handlePayment}
+                    disabled={!loading || !instance || !auth?.user?.address}
+                  >
+                    {loading ? "Processing ..." : "Make Payment"}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

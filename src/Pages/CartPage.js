@@ -82,7 +82,7 @@ const CartPage = () => {
             </h1>
             <h3 className="text-center">
               {cart?.length > 1
-                ? `you have ${cart.length} items in your cart. 
+                ? `you have ${cart?.length} items in your cart. 
                 ${auth?.token ? "" : "please login to checkout"}`
                 : "Your cart is empty"}
             </h3>
@@ -162,9 +162,9 @@ const CartPage = () => {
             )}
             <div className="mt-2">
               {!clientToken || !cart?.length ? (
-                " "
+                ""
               ) : (
-                <>
+                <div className="mb-3">
                   <DropIn
                     options={{
                       authorization: clientToken,
@@ -181,7 +181,7 @@ const CartPage = () => {
                   >
                     {loading ? "Processing ..." : "Make Payment"}
                   </button>
-                </>
+                </div>
               )}
             </div>
           </div>

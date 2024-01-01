@@ -7,6 +7,8 @@ import { Prices } from "../Routes/Price";
 import { useCart } from "../Context/Cart";
 import toast from "react-hot-toast";
 import { AiOutlineReload } from "react-icons/ai";
+import "../style/HomePage.css";
+import banner from "../Assets/03.jpg";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -108,12 +110,12 @@ const HomePage = () => {
   return (
     <Layout title={"ALl Products - Best offers "}>
       {/* banner image */}
-      {/* <img
-        src="/images/banner.png"
+      <img
+        src={banner}
         className="banner-img"
         alt="bannerimage"
         width={"100%"}
-      /> */}
+      />
       {/* banner image */}
       <div className="container-fluid row mt-3 home-page">
         <div className="col-md-3 filters">
@@ -150,7 +152,7 @@ const HomePage = () => {
         </div>
         <div className="col-md-9 ">
           <h1 className="text-center">All Products</h1>
-          <div className="d-flex flex-wrap">
+          <div className="prd  mt-4 w-100 flex-wrap">
             {products?.map((p) => (
               <div className="card m-2" key={p._id}>
                 <img

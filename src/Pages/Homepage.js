@@ -6,8 +6,9 @@ import { Checkbox, Radio } from "antd";
 import { Prices } from "../Routes/Price";
 import { useCart } from "../Context/Cart";
 import toast from "react-hot-toast";
+import { AiOutlineReload } from "react-icons/ai";
 
-const Homepage = () => {
+const HomePage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
   const [products, setProducts] = useState([]);
@@ -105,7 +106,15 @@ const Homepage = () => {
     }
   };
   return (
-    <Layout>
+    <Layout title={"ALl Products - Best offers "}>
+      {/* banner image */}
+      {/* <img
+        src="/images/banner.png"
+        className="banner-img"
+        alt="bannerimage"
+        width={"100%"}
+      /> */}
+      {/* banner image */}
       <div className="container-fluid row mt-3 home-page">
         <div className="col-md-3 filters">
           <h4 className="text-center">Filter By Category</h4>
@@ -143,14 +152,14 @@ const Homepage = () => {
           <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.map((p) => (
-              <div className="card m-2 w-25" key={p._id}>
+              <div className="card m-2" key={p._id}>
                 <img
                   src={`/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />
                 <div className="card-body">
-                  {/* <div className="card-name-price">
+                  <div className="card-name-price">
                     <h5 className="card-title">{p.name}</h5>
                     <h5 className="card-title card-price">
                       {p.price.toLocaleString("en-US", {
@@ -158,7 +167,7 @@ const Homepage = () => {
                         currency: "USD",
                       })}
                     </h5>
-                  </div> */}
+                  </div>
                   <p className="card-text ">
                     {p.description.substring(0, 60)}...
                   </p>
@@ -173,7 +182,11 @@ const Homepage = () => {
                       className="btn btn-dark ms-1"
                       onClick={() => {
                         setCart([...cart, p]);
-                        toast.success("Item added in the cart");
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify([...cart, p])
+                        );
+                        toast.success("Item Added to cart");
                       }}
                     >
                       ADD TO CART
@@ -186,13 +199,20 @@ const Homepage = () => {
           <div className="m-2 p-3">
             {products && products.length < total && (
               <button
-                className="btn btn-warning loadmore"
+                className="btn loadmore"
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);
                 }}
               >
-                {loading ? "Loading ..." : <> Loadmore</>}
+                {loading ? (
+                  "Loading ..."
+                ) : (
+                  <>
+                    {" "}
+                    Loadmore <AiOutlineReload />
+                  </>
+                )}
               </button>
             )}
           </div>
@@ -202,4 +222,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default HomePage;

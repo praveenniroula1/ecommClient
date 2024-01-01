@@ -4,24 +4,23 @@ import Adminmenu from "../Layout/Adminmenu";
 import { useAuth } from "../Context/Auth";
 
 const AdminDashboard = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   return (
     <Layout>
-      <div className="container-fluid m-3 p-3">
+      <div className="container-fluid m-3 p-3 dashboard">
         <div className="row">
           <div className="col-md-3">
             <Adminmenu />
           </div>
           <div className="col-md-9">
-            {" "}
             <div className="card w-75 p-3">
-              <h1>Admin Name: {auth?.user?.fullName}</h1>
-              <h1>Admin Email: {auth?.user?.email}</h1>
-              <h1>Admin Phone: {auth?.user?.phone}</h1>
+              <h3> Admin Name : {auth?.user?.name}</h3>
+              <h3> Admin Email : {auth?.user?.email}</h3>
+              <h3> Admin Contact : {auth?.user?.phone}</h3>
             </div>
           </div>
         </div>
-      </div>{" "}
+      </div>
     </Layout>
   );
 };

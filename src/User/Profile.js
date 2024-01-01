@@ -35,7 +35,7 @@ const Profile = () => {
         phone,
         address,
       });
-      if (data?.error) {
+      if (data?.errro) {
         toast.error(data?.error);
       } else {
         setAuth({ ...auth, user: data?.updatedUser });

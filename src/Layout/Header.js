@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
-import { CiShoppingCart } from "react-icons/ci";
 import { useAuth } from "../Context/Auth";
 import toast from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
@@ -10,6 +9,8 @@ import { Badge } from "antd";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  console.log(auth);
+
   const [cart] = useCart();
   const categories = useCategory();
   const handleLogout = () => {
@@ -18,12 +19,12 @@ const Header = () => {
       user: null,
       token: "",
     });
-    toast.success("Logout Successfully.");
     localStorage.removeItem("auth");
+    toast.success("Logout Successfully");
   };
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
           <button
             className="navbar-toggler"
@@ -38,7 +39,7 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand">
-              <CiShoppingCart /> Ecommerce App
+              🛒 Ecommerce App
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <SearchInput />
@@ -73,17 +74,17 @@ const Header = () => {
                   ))}
                 </ul>
               </li>
-              {!auth.user ? (
+
+              {!auth?.user ? (
                 <>
-                  {" "}
                   <li className="nav-item">
-                    <NavLink to="/login" className="nav-link">
-                      Login{" "}
+                    <NavLink to="/register" className="nav-link">
+                      Register
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/register" className="nav-link">
-                      register
+                    <NavLink to="/login" className="nav-link">
+                      Login
                     </NavLink>
                   </li>
                 </>
@@ -95,40 +96,41 @@ const Header = () => {
                       href="#"
                       role="button"
                       data-bs-toggle="dropdown"
-                      aria-expanded="false"
+                      style={{ border: "none" }}
                     >
-                      ADMIN{" "}
+                      {/* {auth?.user?.fullName} */}
+                      My Account
                     </NavLink>
                     <ul className="dropdown-menu">
                       <li>
                         <NavLink
-                          className="dropdown-item"
                           to={`/dashboard/${
                             auth?.user?.role === 1 ? "admin" : "user"
                           }`}
+                          className="dropdown-item"
                         >
                           Dashboard
                         </NavLink>
                       </li>
-                      <li className="nav-item">
+                      <li>
                         <NavLink
                           onClick={handleLogout}
                           to="/login"
-                          className="nav-link"
+                          className="dropdown-item"
                         >
                           Logout
                         </NavLink>
                       </li>
                     </ul>
-                  </li>{" "}
+                  </li>
                 </>
               )}
               <li className="nav-item">
-                <Badge count={cart?.length} showZero>
-                  <NavLink to="/cart" className="nav-link" href="#">
+                <NavLink to="/cart" className="nav-link">
+                  <Badge count={cart?.length} showZero offset={[10, -5]}>
                     Cart
-                  </NavLink>
-                </Badge>
+                  </Badge>
+                </NavLink>
               </li>
             </ul>
           </div>

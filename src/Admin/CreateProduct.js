@@ -45,9 +45,9 @@ const CreateProduct = () => {
       productData.append("description", description);
       productData.append("price", price);
       productData.append("quantity", quantity);
-      photo && productData.append("photo", photo);
+      productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = await axios.post(
+      const { data } = axios.post(
         "/api/v1/product/create-product",
         productData
       );
@@ -65,7 +65,7 @@ const CreateProduct = () => {
 
   return (
     <Layout title={"Dashboard - Create Product"}>
-      <div className="container-fluid m-3 p-3">
+      <div className="container-fluid m-3 p-3 dashboard">
         <div className="row">
           <div className="col-md-3">
             <Adminmenu />

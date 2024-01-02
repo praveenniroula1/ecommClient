@@ -7,8 +7,8 @@ import { Prices } from "../Routes/Price";
 import { useCart } from "../Context/Cart";
 import toast from "react-hot-toast";
 import { AiOutlineReload } from "react-icons/ai";
-import "../style/HomePage.css";
 import banner from "../Assets/03.jpg";
+import "../Style/HomePage.css";
 
 const HomePage = () => {
   const navigate = useNavigate();

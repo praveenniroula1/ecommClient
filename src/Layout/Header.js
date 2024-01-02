@@ -9,8 +9,6 @@ import { Badge } from "antd";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
-  console.log(auth);
-
   const [cart] = useCart();
   const categories = useCategory();
   const handleLogout = () => {
@@ -98,8 +96,7 @@ const Header = () => {
                       data-bs-toggle="dropdown"
                       style={{ border: "none" }}
                     >
-                      {/* {auth?.user?.fullName} */}
-                      My Account
+                      {auth?.user?.name}
                     </NavLink>
                     <ul className="dropdown-menu">
                       <li>

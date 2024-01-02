@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../Context/Auth";
-import "../style/AuthStyle.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +16,8 @@ const Login = () => {
   // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = auth?.token;
+    console.log("Authentication Token:", token);
     try {
       const res = await axios.post("/api/v1/auth/login", {
         email,

@@ -3,7 +3,6 @@ import Layout from "../Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../style/AuthStyle.css";
 
 const initialState = {
   fullName: "",

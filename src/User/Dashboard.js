@@ -4,9 +4,9 @@ import { useAuth } from "../Context/Auth";
 import UserMenu from "../Layout/UserMenu";
 
 const Dashboard = () => {
-  const [auth] = useAuth();
+  const [auth, setAuth] = useAuth();
   return (
-    <Layout title={"Dashboard - Ecommerce App"}>
+    <Layout>
       <div className="container-flui m-3 p-3">
         <div className="row">
           <div className="col-md-3">

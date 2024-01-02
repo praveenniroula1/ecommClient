@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import Layout from "../Layout/Layout";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "../Style/ProductDetailsStyles.css";
+import toast from "react-hot-toast";
+import { useCart } from "../Context/Cart";
 
 const ProductDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
-
+  const [cart, setCart] = useCart();
   //initalp details
   useEffect(() => {
     if (params?.slug) getProduct();
@@ -36,6 +39,7 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+
   return (
     <Layout>
       <div className="row container product-details">
@@ -51,16 +55,23 @@ const ProductDetails = () => {
         <div className="col-md-6 product-details-info">
           <h1 className="text-center">Product Details</h1>
           <hr />
-          <h6>Name : {product.name}</h6>
-          <h6>Description : {product.description}</h6>
+          <h6 className="">
+            <span className="fw-bold">Name</span> : {product.name}
+          </h6>
           <h6>
+            <span className="fw-bold">Description :</span> {product.description}
+          </h6>
+          <h6 className="fw-bold fs-3 text-success">
             Price :
             {product?.price?.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
             })}
           </h6>
-          <h6>Category : {product?.category?.name}</h6>
+          <h6>
+            <span className="fw-bold">Category :</span>{" "}
+            {product?.category?.name}
+          </h6>
           <button class="btn btn-secondary ms-1">ADD TO CART</button>
         </div>
       </div>
@@ -98,19 +109,7 @@ const ProductDetails = () => {
                   >
                     More Details
                   </button>
-                  {/* <button
-                  className="btn btn-dark ms-1"
-                  onClick={() => {
-                    setCart([...cart, p]);
-                    localStorage.setItem(
-                      "cart",
-                      JSON.stringify([...cart, p])
-                    );
-                    toast.success("Item Added to cart");
-                  }}
-                >
-                  ADD TO CART
-                </button> */}
+                  <button className="btn btn-dark ms-1">ADD TO CART</button>
                 </div>
               </div>
             </div>

@@ -17,7 +17,11 @@
   text-transform: uppercase;
   box-shadow: 0 8px 6px -6px gray;
   --webkit-box-shadow: 0 8px 6px -6px gray;
-  border-bottom: solid gray !important;
+  border-bottom: 5px solid gray !important;
+}
+.nav {
+  background-color: rgba(239, 119, 119, 0.667);
+  margin-top: -0.5rem;
 }
 
 .nav-link {
@@ -31,7 +35,7 @@
 .navbar-brand {
   font-weight: 700;
   font-family: "roboto", sans-serif;
-  letter-spacing: 3px;
+  color: white;
 }
 
 .search-form {
@@ -142,8 +146,18 @@
   color: white;
   padding: 20px 0px;
 }
+
 .prd {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.logo {
+  height: 12vh;
+  width: 100%;
+  background-color: rgba(2, 3, 2, 0.712);
+  margin-left: 3rem;
+  border-radius: 0rem 2rem 0rem 2rem;
+  padding: 10px;
 }

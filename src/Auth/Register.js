@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const initialState = {
-  fullName: "",
+  name: "",
   email: "",
   password: "",
   phone: "",
@@ -53,8 +53,8 @@ const Register = () => {
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Full Name"
-              name="fullName"
-              value={form.fullName}
+              name="name"
+              value={form.name}
               onChange={handleOnChange}
             />
           </div>

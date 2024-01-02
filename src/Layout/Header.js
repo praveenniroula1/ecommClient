@@ -6,6 +6,7 @@ import SearchInput from "../Form/SearchInput";
 import useCategory from "../Hooks/useCategory";
 import { useCart } from "../Context/Cart";
 import { Badge } from "antd";
+import logo from "../Assets/logo.png";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -23,7 +24,7 @@ const Header = () => {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-        <div className="container-fluid">
+        <div className="nav text-light container-fluid">
           <button
             className="navbar-toggler"
             type="button"
@@ -37,7 +38,7 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand">
-              🛒 Ecommerce App
+              <img className="logo" src={logo} />
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <SearchInput />
@@ -96,6 +97,8 @@ const Header = () => {
                       data-bs-toggle="dropdown"
                       style={{ border: "none" }}
                     >
+                      {/* The user name should be displayed however if i send the email or address in here it displays but not the name and CHATGPT you have to find the error why  */}
+                      {console.log("User Object:", auth?.user)}
                       {auth?.user?.name}
                     </NavLink>
                     <ul className="dropdown-menu">
